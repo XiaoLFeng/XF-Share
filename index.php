@@ -370,7 +370,7 @@ $row = mysqli_fetch_object($result)
 							</a>
 							</p>
 							<?PHP } ?>
-						<!-- 蓝奏云网盘 -->
+						<!-- 其他网盘 -->
 							<?PHP
 							if ($row->qita =="") {
 							}else {
@@ -385,7 +385,7 @@ $row = mysqli_fetch_object($result)
 								echo "其他雲盤";
 							}
 							echo "："?>
-							<a href="<?PHP echo $row->lanzou ?>" class="mdui-shadow-5 mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">
+							<a href="<?PHP echo $row->qita ?>" class="mdui-shadow-5 mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">
 							<?php
 							if ($row->qita_look == "") {
 								echo "点击下载";
