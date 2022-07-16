@@ -9,26 +9,20 @@ function color($color_id) {
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-opacity-50 mb-4 shadow">
     <div class="container-fluid my-2">
-        <a class="navbar-brand" href="#"><strong><?PHP echo info('xfs_title') ?></strong></a>
+        <a class="navbar-brand" href="#"><strong><?PHP echo $ordinary_main['info']['xfs_title']['text']; ?></strong></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link <?PHP color(1) ?>" aria-current="page" href="./index.php">首页</a>
+                    <a class="nav-link <?PHP color(1) ?>" aria-current="page" href="<?PHP echo 'http://'.$_SERVER['HTTP_HOST'].'/index.php' ?>"><i class="bi bi-house-door"></i> 首页</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?PHP color(2) ?>" href="#">Link</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">dropdown</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link <?PHP color(3) ?>" href="<?PHP echo 'http://'.$_SERVER['HTTP_HOST'].'/admin/index.php' ?>"><i class="bi bi-person"></i> 管理员面板</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
+                    <a class="nav-link <?PHP color(4) ?>" href="<?PHP echo 'http://'.$_SERVER['HTTP_HOST'].'/auth.php' ?>"><i class="bi bi-box-arrow-in-left"></i> 用户登录</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">

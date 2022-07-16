@@ -9,11 +9,18 @@
 
 // 载入组件
 include('./module/head-check.php');
+include('./plugins/Parsedown.php');
 
-// 载入用户数据库
-$xfs_person = mysqli_query($conn,"SELECT * FROM ".$setting['SQL_DATA']['person']);
-$xfs_person_object = mysqli_fetch_object($xfs_person);
+// 载入用户信息
+$person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';    
+$person_ch = curl_init($person_url);
+curl_setopt($person_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
+curl_setopt($person_ch, CURLOPT_RETURNTRANSFER, true);
+$person = curl_exec($person_ch);
+$person = json_decode($person,true);
 
+// 使用MarkDown转HTML编译
+$Parsedown = new Parsedown();
 ?>
 <!doctype html>
 <html lang="zh">
@@ -21,10 +28,10 @@ $xfs_person_object = mysqli_fetch_object($xfs_person);
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><?PHP echo info('xfs_title') ?> | <?PHP echo info('xfs_subtitle') ?></title>
-        <meta name="keywords" content="<?PHP echo info('xfs_keywords') ?>">
-        <meta name="description" content="<?PHP echo info('xfs_subtitle') ?>">
-        <link rel="shortcut icon" href="<?PHP echo info('xfs_icon') ?>" type="image/x-icon">
+        <title><?PHP echo $ordinary_main['info']['xfs_title']['text']; ?> | <?PHP echo $ordinary_main['info']['xfs_subtitle']['text']; ?></title>
+        <meta name="keywords" content="<?PHP echo $ordinary_main['info']['xfs_keywords']['text']; ?>">
+        <meta name="description" content="<?PHP echo $ordinary_main['info']['xfs_subtitle']['text']; ?>">
+        <link rel="shortcut icon" href="<?PHP echo $ordinary_main['info']['xfs_icon']['text']; ?>" type="image/x-icon">
         <!-- CSS -->
         <link href="./static/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://npm.akass.cn/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
@@ -51,12 +58,12 @@ $xfs_person_object = mysqli_fetch_object($xfs_person);
             <div class="row">
                 <!-- 内容 -->
                 <div class="col-12 mb-3">
-                    <div class="card round-3 shadow">
+                    <div class="card rounded-3 shadow">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><svg class="bd-placeholder-img rounded" width="75" height="75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example rounded image: 75x75" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Example rounded image</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="20%" y="50%" fill="#dee2e6" dy=".3em">75x75</text></svg></div>
+                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><svg class="bd-placeholder-img roundeded" width="75" height="75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example roundeded image: 75x75" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Example roundeded image</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="20%" y="50%" fill="#dee2e6" dy=".3em">75x75</text></svg></div>
                                         <div class="col-8 col-sm-9 col-md-10 col-xxl-11 align-self-center">
                                             <h5>锋叶 1.18.2 官方客户端下载</h5>
                                             <font color='grey'><i class="bi bi-eye"></i> 725 <i class="bi bi-clock"></i> 2022-07-15 23:56:00</font>
@@ -68,14 +75,14 @@ $xfs_person_object = mysqli_fetch_object($xfs_person);
                                     <button type="button" class="btn btn-outline-primary" id="copy-tosBtn"><i class="bi bi-clipboard"></i> 复制链接</button>
                                 </div>
                                 <div class="col-12"><hr/></div>
-                                <div class="col-12">超级精简版</div>
+                                <div class="col-12"><?PHP echo $Parsedown->text('Hello _Parsedown_!'); ?></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- 评论 -->
                 <div class="col-12 mb-3">
-                    <div class="card round-3 shadow">
+                    <div class="card rounded-3 shadow">
                         <div class="card-header"><i class="bi bi-chat-left-text"></i> 评论</div>
                         <div class="card-body">
                             放着测试用
@@ -88,13 +95,13 @@ $xfs_person_object = mysqli_fetch_object($xfs_person);
             <div class="row">
                 <!-- 个人信息 -->
                 <div class="col-12 mb-3">
-                    <div class="card round-3 shadow">
+                    <div class="card rounded-3 shadow">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-2"><img src="<?PHP echo $xfs_person_object->icon ?>" style="height: 40px;" class="rounded-circle border border-1"></div>
-                                        <div class="col-10 align-self-center ps-4"><?PHP echo $xfs_person_object->displayname ?></div>
+                                        <div class="col-2"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 40px;" class="roundeded-circle border border-1"></div>
+                                        <div class="col-10 align-self-center ps-4"><?PHP echo $person['info']['displayname']; ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +110,7 @@ $xfs_person_object = mysqli_fetch_object($xfs_person);
                 </div>
                 <!-- 版本信息 -->
                 <div class="col-12 mb-3">
-                    <div class="card round-3 shadow">
+                    <div class="card rounded-3 shadow">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 mb-3">
@@ -144,7 +151,7 @@ $xfs_person_object = mysqli_fetch_object($xfs_person);
                 </div>
                 <!-- 时间信息 -->
                 <div class="col-12 mb-3">
-                    <div class="card round-3 shadow">
+                    <div class="card rounded-3 shadow">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 mb-1">
