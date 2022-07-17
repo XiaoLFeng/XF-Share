@@ -42,3 +42,5 @@ $setting['SQL_DATA']['info'] = 'xfs_info';
 $setting['SQL_DATA']['person'] = 'xfs_person';
 // 网站文章数据表
 $setting['SQL_DATA']['article'] = 'xfs_article';
+// 网站标签数据表
+$setting['SQL_DATA']['tags'] = 'xfs_tags';

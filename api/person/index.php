@@ -5,13 +5,8 @@
  * 该内容为隐私重要内容，请勿随意修改
  */
 
-// 开启session
-session_start();
-// 设置请求头
-header('Content-Type: application/json;charset=utf-8');
 // 获取组件
-include($_SERVER['DOCUMENT_ROOT'].'/setting.inc.php');
-include($_SERVER['DOCUMENT_ROOT'].'/plugins/sql_conn.php');
+include($_SERVER['DOCUMENT_ROOT'].'/api/head-check.php');
 // 获取参数
 $ssid = htmlspecialchars($_GET['ssid']);
 $username = htmlspecialchars($_GET['username']);
@@ -20,7 +15,7 @@ $username = htmlspecialchars($_GET['username']);
 $xfs_info = mysqli_query($conn,"SELECT * FROM ".$setting['SQL_DATA']['info']." WHERE info='xfs_ssid'");
 $xfs_info_object = mysqli_fetch_object($xfs_info);
 // 构建函数
-if (!empty($ssid)) {
+if ($ssid == xfs_ssid()) {
     if ($ssid == $xfs_info_object->text) {
         if (!empty($username)) {
             // 获取数据库中用户信息

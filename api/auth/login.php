@@ -5,19 +5,13 @@
  * 该内容为隐私重要内容，请勿随意修改
  */
 
-// 开启session
-session_start();
-// 设置请求头
-header('Content-Type: application/json;charset=utf-8');
-header('Access-Control-Allow-Origin:*');
 // 获取组件
-include($_SERVER['DOCUMENT_ROOT'].'/setting.inc.php');
-include($_SERVER['DOCUMENT_ROOT'].'/plugins/sql_conn.php');
+include($_SERVER['DOCUMENT_ROOT'].'/api/head-check.php');
 // 获取参数
 $post = file_get_contents('php://input');
 $json_info = json_decode($post,true);
 // 构建函数
-if (!empty($json_info['ssid'])) {
+if ($json_info['ssid'] == xfs_ssid()) {
     if (empty($json_info['username']) and empty($json_info['mail'])) {
         // 构建json
         $data = array(
@@ -84,7 +78,7 @@ if (!empty($json_info['ssid'])) {
     $data = array(
         'output'=>'SSID_NONE',
         'code'=>403,
-        'info'=>'不存在 GET 口，请使用 POST 接口',
+        'info'=>'不存在 GET 口，请使用 POST 接口，参数 JSON[ssid] 缺失或错误',
     );
     // 输出数据
     echo json_encode($data,JSON_UNESCAPED_UNICODE);

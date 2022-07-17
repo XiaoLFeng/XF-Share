@@ -5,11 +5,8 @@
  * 该内容为隐私重要内容，请勿随意修改
  */
 
-// 设置请求头
-header('Content-Type: application/json;charset=utf-8');
 // 获取组件
-include($_SERVER['DOCUMENT_ROOT'].'/setting.inc.php');
-include($_SERVER['DOCUMENT_ROOT'].'/plugins/sql_conn.php');
+include($_SERVER['DOCUMENT_ROOT'].'/api/head-check.php');
 // 获取参数
 $type = htmlspecialchars($_GET['type']);
 // 构建函数
