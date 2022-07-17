@@ -21,7 +21,7 @@ if (!empty($ssid)) {
                 // 构建json
                 $data = array(
                     'output'=>'SUCCESS',
-                    'code'=>403,
+                    'code'=>200,
                     'info'=>'查询成功',
                     'data'=>array(
                         'tags'=>$result_tags_object->tags,
