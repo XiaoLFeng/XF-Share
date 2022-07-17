@@ -63,7 +63,7 @@ $Parsedown = new Parsedown();
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><svg class="bd-placeholder-img roundeded" width="75" height="75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example roundeded image: 75x75" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Example roundeded image</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="20%" y="50%" fill="#dee2e6" dy=".3em">75x75</text></svg></div>
+                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><svg class="bd-placeholder-img rounded" width="75" height="75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example rounded image: 75x75" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Example rounded image</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="20%" y="50%" fill="#dee2e6" dy=".3em">75x75</text></svg></div>
                                         <div class="col-8 col-sm-9 col-md-10 col-xxl-11 align-self-center">
                                             <h5>锋叶 1.18.2 官方客户端下载</h5>
                                             <font color='grey'><i class="bi bi-eye"></i> 725 <i class="bi bi-clock"></i> 2022-07-15 23:56:00</font>
@@ -100,7 +100,7 @@ $Parsedown = new Parsedown();
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-2"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 40px;" class="roundeded-circle border border-1"></div>
+                                        <div class="col-2"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 40px;" class="rounded-circle border border-1"></div>
                                         <div class="col-10 align-self-center ps-4"><?PHP echo $person['info']['displayname']; ?></div>
                                     </div>
                                 </div>

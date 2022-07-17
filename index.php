@@ -46,7 +46,7 @@ $menu_id = 1;
         <div class="col-12 col-lg-9">
             <div class="row">
                 <div class="col-12 px-2 mb-3">
-                    <div class="p-5 bg-primary text-white roundeded opacity-75 roundeded-3 shadow">
+                    <div class="p-5 bg-primary text-white rounded opacity-75 rounded-3 shadow">
                         <h1><?PHP echo $ordinary_main['info']['xfs_title']['text']; ?></h1> 
                         <p><?PHP echo $ordinary_main['info']['xfs_subtitle']['text']; ?></p> 
                     </div>
@@ -97,7 +97,7 @@ $menu_id = 1;
                     <div class="card rounded-3 shadow">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 text-center"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 120px;" class="roundeded-circle border border-1"></div>
+                                <div class="col-12 text-center"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 120px;" class="rounded-circle border border-1"></div>
                                 <div class="col-12 mt-3">
                                     <div class="card-title text-center mx-2"><h5><strong><?PHP echo $person['info']['displayname']; ?></strong></h5></div>
                                     <div class="card-title text-center mx-2"><?PHP echo $person['info']['description']; ?></div>
@@ -111,7 +111,7 @@ $menu_id = 1;
                     <div class="card rounded-3 shadow">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 text-center"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 120px;" class="roundeded-circle border border-1"></div>
+                                <div class="col-12 text-center"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 120px;" class="rounded-circle border border-1"></div>
                                 <div class="col-12 mt-3">
                                     <div class="card-title text-center mx-2"><h5><strong><?PHP echo $person['info']['displayname']; ?></strong></h5></div>
                                     <div class="card-title text-center mx-2"><?PHP echo $person['info']['description']; ?></div>
@@ -125,7 +125,7 @@ $menu_id = 1;
                     <div class="card rounded-3 shadow">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 text-center"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 120px;" class="roundeded-circle border border-1"></div>
+                                <div class="col-12 text-center"><img src="<?PHP echo $person['info']['icon_url']; ?>" style="height: 120px;" class="rounded-circle border border-1"></div>
                                 <div class="col-12 mt-3">
                                     <div class="card-title text-center mx-2"><h5><strong><?PHP echo $person['info']['displayname']; ?></strong></h5></div>
                                     <div class="card-title text-center mx-2"><?PHP echo $person['info']['description']; ?></div>

@@ -49,7 +49,83 @@ $menu_id = 3;
 <?PHP include('../module/header.php') ?>
 </header>
 <!-- 内容 -->
-
+<?PHP 
+if ($person['info']['type'] == 1) {
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-3 fs-4 fw-bold"><i class="bi bi-card-list"></i> 基本概况</div>
+        <!-- 8分 -->
+        <div class="col-12 col-lg-8 mb-3">
+            <div class="row">
+                <div class="col-6 col-lg-3 mb-3">
+                    <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
+                        <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 mb-3">
+                    <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
+                        <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 mb-3">
+                    <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
+                        <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 mb-3">
+                    <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
+                        <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
+                    </div>
+                </div>
+                <div class="col-12 mb-3 fs-4 fw-bold"><i class="bi bi-hdd-rack"></i> 服务器信息</div>
+                <div class="col-12 mb-3">
+                    <div class="card shadow-sm rounded-3">
+                        <div class="card-body mx-3">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">操作系统</th>
+                                        <td><?PHP echo php_uname('s').' '.php_uname('r'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">运行环境</th>
+                                        <td><?PHP echo $_SERVER["SERVER_SOFTWARE"]; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">域名</th>
+                                        <td><?PHP echo 'http(s)://'.$_SERVER['HTTP_HOST'].'/'; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">网站文档目录</th>
+                                        <td><?PHP echo $_SERVER["DOCUMENT_ROOT"]; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">PHP版本</th>
+                                        <td><?PHP echo PHP_VERSION; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">服务器语言</th>
+                                        <td><?PHP echo $_SERVER['HTTP_ACCEPT_LANGUAGE']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 4分 -->
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card shadow-sm rounded-3">
+                <div class="card-body">测试</div>
+            </div>
+        </div>
+    </div>
+</div>
+<?PHP
+}
+?>
 <!-- 页尾 -->
 <?PHP include('../module/footer.php') ?>
 </body>

@@ -9,7 +9,7 @@ function color($color_id) {
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-opacity-50 mb-4 shadow">
     <div class="container-fluid my-2">
-        <a class="navbar-brand" href="#"><strong><?PHP echo $ordinary_main['info']['xfs_title']['text']; ?></strong></a>
+        <a class="navbar-brand" href="<?PHP echo 'http://'.$_SERVER['HTTP_HOST'].'/index.php' ?>"><strong><?PHP echo $ordinary_main['info']['xfs_title']['text']; ?></strong></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
