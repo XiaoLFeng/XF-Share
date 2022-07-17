@@ -40,3 +40,5 @@ $setting['SQL']['password'] = 'X+7ily20040722';
 $setting['SQL_DATA']['info'] = 'xfs_info';
 // 网站用户数据表
 $setting['SQL_DATA']['person'] = 'xfs_person';
+// 网站文章数据表
+$setting['SQL_DATA']['article'] = 'xfs_article';
