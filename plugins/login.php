@@ -4,8 +4,6 @@
  * 登录组件
  */
 
-// 开启SESSION
-session_start();
 // 定义请求头
 header("Content-type:text/html;charset=utf-8");
 // 获取组件
@@ -42,15 +40,16 @@ $type = htmlspecialchars($_GET['type']);
 // 编译函数
 if ($type == 'email') {
     // 导入form参数
-    $email = $_POST['email'];
+    $mail = $_POST['email'];
     $password = $_POST['password'];
+    $stay_login = $_POST['stay_login'];
     // 检查数据是否合法
-    if (preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$email) and preg_match("/[^~;)(]+/",$password)) {
+    if (preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$mail) and preg_match("/[^~;)(]+/",$password)) {
         // 发送用户信息
-        $url = $_SERVER['DOCUMENT_ROOT']."/api/auth/login.php"; //请求地址
+        $url = $_SERVER['HTTP_HOST']."/api/auth/login.php"; //请求地址
         $arr = array(
             'ssid'=>xfs_ssid(),
-            'email'=>$email,
+            'mail'=>$mail,
             'username'=>null,
             'password'=>$password,
             'stay_login'=>$stay_login
@@ -58,7 +57,50 @@ if ($type == 'email') {
         $jsonStr = json_encode($arr); //转换为json格式
         $result = http_post_json($url, $jsonStr);
         $result = json_decode($result,true);
-
+        // 返回参数
+        if ($result['output'] == "SUCCESS") {
+            // 赋予COOKIE
+            if ($stay_login == TRUE) {
+                setcookie( 'user' , $result['data']['id'] , time()+2592000 , '/' , '');
+            } else {
+                setcookie( "user" , $result['data']['id'] , time()+86400);
+            }
+            // 返回
+            echo <<<EOF
+                <script language="javascript">
+                    alert( "登陆成功" )
+                    window.location.href = "../index.php"
+                </script>
+                EOF;
+        } elseif ($result['output'] == "PASSWORD_DENY") {
+            echo <<<EOF
+                <script language="javascript">
+                    alert( "密码错误" )
+                    window.history.go(-1);
+                </script>
+                EOF;
+        } elseif ($result['output'] == "USER_INFO_NONE") {
+            echo <<<EOF
+                <script language="javascript">
+                    alert( "缺少用户参数" )
+                    window.history.go(-1);
+                </script>
+                EOF;
+        } elseif ($result['output'] == "PASSWORD_NONE") {
+            echo <<<EOF
+                <script language="javascript">
+                    alert( "缺少密码" )
+                    window.history.go(-1);
+                </script>
+                EOF;
+        } else {
+            echo <<<EOF
+                <script language="javascript">
+                    alert( "未知错误" )
+                    window.history.go(-1);
+                </script>
+                EOF;
+        }
     // 正则表达式审核不通过情况下处理
     } else {
         if (preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$email) and !preg_match("/[^~;)(]+/",$password)) {

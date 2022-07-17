@@ -39,7 +39,7 @@ if (!empty($ssid)) {
                         'mail'=>$xfs_person_object->mail,
                         'qq'=>$xfs_person_object->qq,
                         'description'=>$xfs_person_object->description,
-                        'icon_url'=>$xfs_person_object->icon
+                        'icon_url'=>$xfs_person_object->icon_url
                     )
                 );
                 // 输出数据

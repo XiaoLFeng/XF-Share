@@ -30,25 +30,27 @@ if (!empty($json_info['ssid'])) {
     } else {
         if (!empty($json_info['password'])) {
             // 查找数据
-            $xfs_person = mysqli_query($conn,"SELECT * FROM ".$setting['SQL_DATA']['person']." WHERE username='".$json_info['username']."'");
+            if (!empty($json_info['username'])) {
+                $xfs_person = mysqli_query($conn,"SELECT * FROM ".$setting['SQL_DATA']['person']." WHERE username='".$json_info['username']."'");
+            } elseif (!empty($json_info['mail'])) {
+                $xfs_person = mysqli_query($conn,"SELECT * FROM ".$setting['SQL_DATA']['person']." WHERE mail='".$json_info['mail']."'");
+            }
             $xfs_person_object = mysqli_fetch_object($xfs_person);
             // 获取密码
             $sql_password = $xfs_person_object->password;
             // 验证密码
             if (password_verify($json_info['password'], $sql_password)) {
-                // 赋予COOKIE
-                if ($json_info['stay_login']) {
-                    setcookie(session_name(),session_id(),time()+2592000);
-                    $_SESSION['user'] = $xfs_person_object->id;
-                } else {
-                    setcookie(session_name(),session_id(),time()+86400);
-                    $_SESSION['user'] = $xfs_person_object->id;
-                }
                 // 构建json
                 $data = array(
                     'output'=>'SUCCESS',
                     'code'=>200,
-                    'info'=>'密码验证通过'
+                    'info'=>'密码验证通过',
+                    'data'=>array(
+                        'id'=>$xfs_person_object->id,
+                        'username'=>$xfs_person_object->username,
+                        'displayname'=>$xfs_person_object->displayname,
+                        'mail'=>$xfs_person_object->mail
+                    )
                 );
                 echo json_encode($data,JSON_UNESCAPED_UNICODE);
             } else {
@@ -83,7 +85,6 @@ if (!empty($json_info['ssid'])) {
         'output'=>'SSID_NONE',
         'code'=>403,
         'info'=>'不存在 GET 口，请使用 POST 接口',
-        'demo'=>$json_info['ssid']
     );
     // 输出数据
     echo json_encode($data,JSON_UNESCAPED_UNICODE);

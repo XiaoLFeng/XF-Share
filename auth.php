@@ -7,8 +7,10 @@
  * 尊重作者的权益
  */
 
-// 开启session
-session_start();
+// 检查是否登录
+if (!empty($_COOKIE['user'])) {
+	header('location: http://'.$_SERVER['HTTP_HOST'].'/index.php');
+}
 // 载入组件
 include('./module/head-check.php');
 // 载入参数
@@ -24,11 +26,6 @@ $person = json_decode($person,true);
 
 // 页面ID
 $menu_id = 4;
-
-// 确认信息是否无SESSION
-if (!empty($_SESSION['user'])) {
-	header('location:'.$_SERVER['DOCUMENT_ROOT'].'/index.php');
-}
 ?>
 <!doctype html>
 <html lang="zh">
@@ -69,11 +66,15 @@ if ($type == 'login' or empty($type)) {
 									<input type="email" class="form-control" id="email" name="email">
 								</div>
 							</div>
-							<div class="mb-4 row">
+							<div class="mb-3 row">
 								<label for="inputPassword" class="col-sm-2 col-form-label"><i class="bi bi-lock"></i> 密码</label>
 								<div class="col-sm-10">
 									<input type="password" class="form-control" id="password" name="password">
 								</div>
+							</div>
+							<div class="mb-4 form-check">
+								<input class="form-check-input" type="checkbox" value="TRUE" id="stay_login" name="stay_login">
+								<label class="form-check-label">保持登录状态</label>
 							</div>
 							<div class="mb-4 text-center">
 								<button class="btn btn-primary" type="submit"><i class="bi bi-check"></i> 提交</button>
