@@ -47,8 +47,8 @@ if (!empty($ssid)) {
                     'date'=>$result_article_object->date,
                     'update_date'=>$result_article_object->update_date,
                     'see'=>$result_article_object->see,
-                    'hide'=>$result_article_object->hide
-
+                    'hide'=>$result_article_object->hide,
+                    'icon_url'=>$result_article_object->icon_url
                 );
                 $arr_num ++;
             }

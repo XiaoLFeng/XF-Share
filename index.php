@@ -9,14 +9,56 @@
 
 // 载入组件
 include('./module/head-check.php');
+// 获取参数
+$page = htmlspecialchars($_GET['page']);
 
-// 载入用户信息
+// 检查数据
+if (empty($page)) {
+    header('location: ?page=1');
+}
+
+// 载入个人用户信息
 $person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';    
 $person_ch = curl_init($person_url);
 curl_setopt($person_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
 curl_setopt($person_ch, CURLOPT_RETURNTRANSFER, true);
 $person = curl_exec($person_ch);
 $person = json_decode($person,true);
+// 载入文章信息
+$article_url = $_SERVER['HTTP_HOST'].'/api/article/select/all_article.php?ssid='.xfs_ssid().'&array=1&page='.$page;    
+$article_ch = curl_init($article_url);
+curl_setopt($article_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
+curl_setopt($article_ch, CURLOPT_RETURNTRANSFER, true);
+$article = curl_exec($article_ch);
+$article = json_decode($article,true);
+// 载入标签信息
+function tags($tags) {
+    $tags_url = $_SERVER['HTTP_HOST'].'/api/article/select/tags.php?ssid='.xfs_ssid().'&tags='.$tags;    
+    $tags_ch = curl_init($tags_url);
+    curl_setopt($tags_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
+    curl_setopt($tags_ch, CURLOPT_RETURNTRANSFER, true);
+    $tags = curl_exec($tags_ch);
+    $tags = json_decode($tags,true);
+    if ($tags['data']['name'] == NULL) {
+        return '未分类';
+    } else {
+        return $tags['data']['name'];
+    }
+}
+// 获取用户展示名字
+function displayname($username) {
+    $personal_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username='.$username;    
+    $personal_ch = curl_init($personal_url);
+    curl_setopt($personal_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
+    curl_setopt($personal_ch, CURLOPT_RETURNTRANSFER, true);
+    $personal = curl_exec($personal_ch);
+    $personal = json_decode($personal,true);
+    if ($personal['output'] == 'USERNAME_DENY') {
+        return $username;
+    } else {
+        return $personal['info']['displayname'];
+    }
+}
 
 // 页面ID
 $menu_id = 1;
@@ -53,39 +95,44 @@ $menu_id = 1;
                 </div>
                 <div class="col-12 mb-3">
                     <div class="row">
-                        <div class="col-12 col-sm-6 col-md-4 mb-3">
-                            <div class="card rounded-3 shadow">
-                                <img src="./src/img/lazyload.png" class="card-img-top" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg">
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">锋叶 1.18.2 客户端</h5>
-                                    <div class="card-text text-secondary">2022-07-15</div>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <div class="text-end"><a class="text-decoration-none" href="./article.php?uid=">进入文章👉</a></div>
+                        <?PHP 
+                        $a = 1;
+                        while (!$article['data'][$a]['id'] == NULL) {
+                        ?>
+                        <div class="col-12 col-sm-6 mb-3">
+                            <a href="./article.php?id=<?PHP echo $article['data'][$a]['id']; ?>" class="text-decoration-none text-black">
+                                <div class="card rounded-3 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12 mb-1">
+                                                <svg class="bd-placeholder-img rounded" width="50" height="50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example rounded image: 75x75" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Example rounded image</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="5%" y="50%" fill="#dee2e6" dy=".3em">50x50</text></svg>
+                                                <font class="mx-3 fs-5"><?PHP echo $article['data'][$a]['title']; ?></font>
+                                            </div>
+                                            <div class="col-6 mb-3 text-start">
+                                                <div class="badge bg-secondary"><? echo tags($article['data'][$a]['type']) ?></div>
+                                            </div>
+                                            <div class="col-6 mb-3 text-end"><i class="bi bi-person"></i> <?PHP echo displayname($article['data'][$a]['username']) ?></div>
+                                            <hr/>
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-4 text-secondary text-start"><i class="bi bi-eye"></i> <?PHP echo $article['data'][$a]['see']; ?></div>
+                                                    <div class="col-8 text-secondary text-end"><i class="bi bi-calendar"></i> <?PHP echo $article['data'][$a]['date']; ?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 mb-3">
-                            <div class="card rounded-3 shadow">
-                                <img src="./src/img/lazyload.png" class="card-img-top" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text text-secondary">2022-07-15</p>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <div class="text-end"><a class="text-decoration-none" href="./article.php?uid=">进入文章👉</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4 mb-3">
-                            <div class="card rounded-3 shadow">
-                                <img src="./src/img/lazyload.png" class="card-img-top" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text text-secondary">2022-07-15</p>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <div class="text-end"><a class="text-decoration-none" href="./article.php?uid=">进入文章👉</a></div>
-                                </div>
-                            </div>
-                        </div>
+                        <?PHP 
+                            // 判断是否达到阈值
+                            if ($a <= 19) {
+                                $a ++;
+                            } else {
+                                break;
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
