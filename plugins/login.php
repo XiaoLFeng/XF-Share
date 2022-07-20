@@ -44,7 +44,7 @@ if ($type == 'email') {
     $password = $_POST['password'];
     $stay_login = $_POST['stay_login'];
     // 检查数据是否合法
-    if (preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$mail) and preg_match("/[^~;)(]+/",$password)) {
+    if (preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$mail)) {
         // 发送用户信息
         $url = $_SERVER['HTTP_HOST']."/api/auth/login.php"; //请求地址
         $arr = array(
@@ -103,35 +103,12 @@ if ($type == 'email') {
         }
     // 正则表达式审核不通过情况下处理
     } else {
-        if (preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$email) and !preg_match("/[^~;)(]+/",$password)) {
-            echo <<<EOF
-            <script language="javascript">
-                alert( "密码不能包含【;】【(】【)】【~】" )
-                window.history.go(-1);
-            </script>
-            EOF;
-        } elseif (!preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$email) and preg_match("/[^~;)(]+/",$password)) {
-            echo <<<EOF
-            <script language="javascript">
-                alert( "邮箱格式错误" )
-                window.history.go(-1);
-            </script>
-            EOF;
-        } elseif (!preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/",$email) and !preg_match("/[^~;)(]+/",$password)) {
-            echo <<<EOF
-            <script language="javascript">
-                alert( "邮箱和密码格式均有误！" )
-                window.history.go(-1);
-            </script>
-            EOF;
-        } else {
-            echo <<<EOF
-            <script language="javascript">
-                alert( "未知错误" )
-                window.history.go(-1);
-            </script>
-            EOF;
-        }
+        echo <<<EOF
+        <script language="javascript">
+            alert( "邮箱格式错误" )
+            window.history.go(-1);
+        </script>
+        EOF;
     }
 } elseif ($type == 'username') {
     # code...
