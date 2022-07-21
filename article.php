@@ -10,6 +10,8 @@
 // 载入组件
 include('./module/head-check.php');
 include('./plugins/Parsedown.php');
+// 获取参数
+$id = htmlspecialchars($_GET['id']);
 
 // 载入用户信息
 $person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';    
@@ -18,6 +20,13 @@ curl_setopt($person_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
 curl_setopt($person_ch, CURLOPT_RETURNTRANSFER, true);
 $person = curl_exec($person_ch);
 $person = json_decode($person,true);
+// 载入文章信息
+$article_url = $_SERVER['HTTP_HOST'].'/api/article/select/?ssid='.xfs_ssid().'&id='.$id;    
+$article_ch = curl_init($article_url);
+curl_setopt($article_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
+curl_setopt($article_ch, CURLOPT_RETURNTRANSFER, true);
+$article = curl_exec($article_ch);
+$article = json_decode($article,true);
 
 // 使用MarkDown转HTML编译
 $Parsedown = new Parsedown();
@@ -28,7 +37,7 @@ $Parsedown = new Parsedown();
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><?PHP echo $ordinary_main['info']['xfs_title']['text']; ?> | <?PHP echo $ordinary_main['info']['xfs_subtitle']['text']; ?></title>
+        <title><?PHP echo $article['data']['title'] ?> | <?PHP echo $ordinary_main['info']['xfs_title']['text']; ?></title>
         <meta name="keywords" content="<?PHP echo $ordinary_main['info']['xfs_keywords']['text']; ?>">
         <meta name="description" content="<?PHP echo $ordinary_main['info']['xfs_subtitle']['text']; ?>">
         <link rel="shortcut icon" href="<?PHP echo $ordinary_main['info']['xfs_icon']['text']; ?>" type="image/x-icon">
@@ -63,10 +72,10 @@ $Parsedown = new Parsedown();
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><svg class="bd-placeholder-img rounded" width="75" height="75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example rounded image: 75x75" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Example rounded image</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="20%" y="50%" fill="#dee2e6" dy=".3em">75x75</text></svg></div>
-                                        <div class="col-8 col-sm-9 col-md-10 col-xxl-11 align-self-center">
-                                            <h5>锋叶 1.18.2 官方客户端下载</h5>
-                                            <font color='grey'><i class="bi bi-eye"></i> 725 <i class="bi bi-clock"></i> 2022-07-15 23:56:00</font>
+                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><img width="75" height="75" src="<?PHP echo $article['data']['icon_url'] ?>" alt=""></div>
+                                        <div class="col-8 col-sm-9 col-md-10 col-xxl-11 align-self-center px-4">
+                                            <h5><?PHP echo $article['data']['title'] ?></h5>
+                                            <font color='grey'><i class="bi bi-eye"></i> <?PHP echo $article['data']['see'] ?> <i class="bi bi-clock"></i> <?PHP echo $article['data']['date'] ?></font>
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +84,7 @@ $Parsedown = new Parsedown();
                                     <button type="button" class="btn btn-outline-primary" id="copy-tosBtn"><i class="bi bi-clipboard"></i> 复制链接</button>
                                 </div>
                                 <div class="col-12"><hr/></div>
-                                <div class="col-12"><?PHP echo $Parsedown->text('Hello _Parsedown_!'); ?></div>
+                                <div class="col-12"><?PHP echo $Parsedown->text($article['data']['text']); ?></div>
                             </div>
                         </div>
                     </div>
@@ -144,7 +153,7 @@ $Parsedown = new Parsedown();
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12"><a href="" class="text-decoration-none text-dark">+ 其余 XX 个版本</a></div>
+                                <div class="col-12"><a href="./article_file.php?id=<?PHP echo $article['data']['id'] ?>" class="text-decoration-none text-dark">+ 其余 XX 个版本</a></div>
                             </div>
                         </div>
                     </div>
@@ -160,11 +169,15 @@ $Parsedown = new Parsedown();
                                 <hr class="px-5"/>
                                 <div class="col-12 mb-3 text-secondary">
                                     <h6><strong>发布时间</strong></h6>
-                                    2022-07-12 23:54:00
+                                    <?PHP echo $article['data']['date'] ?>
                                 </div>
                                 <div class="col-12 text-secondary">
-                                    <h6><strong>发布时间</strong></h6>
-                                    2022-07-12 23:54:00
+                                    <h6><strong>更新时间</strong></h6>
+                                    <?PHP if (empty($article['data']['update_date'])) {
+                                        echo $article['data']['date'];
+                                    } else {
+                                        echo $article['data']['update_date'];
+                                    } ?>
                                 </div>
                             </div>
                         </div>
