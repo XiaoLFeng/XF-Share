@@ -27,6 +27,13 @@ curl_setopt($article_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
 curl_setopt($article_ch, CURLOPT_RETURNTRANSFER, true);
 $article = curl_exec($article_ch);
 $article = json_decode($article,true);
+// 载入文件信息
+$file_url = $_SERVER['HTTP_HOST'].'/api/file/select/?ssid='.xfs_ssid().'&id='.$id;    
+$file_ch = curl_init($file_url);
+curl_setopt($file_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
+curl_setopt($file_ch, CURLOPT_RETURNTRANSFER, true);
+$file = curl_exec($file_ch);
+$file = json_decode($file,true);
 
 // 使用MarkDown转HTML编译
 $Parsedown = new Parsedown();
@@ -72,7 +79,7 @@ $Parsedown = new Parsedown();
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row">
-                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><img width="75" height="75" src="<?PHP echo $article['data']['icon_url'] ?>" alt=""></div>
+                                        <div class="col-4 col-sm-3 col-md-2 col-xxl-1"><img class="rounded-3" width="75" height="75" src="<?PHP echo $article['data']['icon_url'] ?>" alt=""></div>
                                         <div class="col-8 col-sm-9 col-md-10 col-xxl-11 align-self-center px-4">
                                             <h5><?PHP echo $article['data']['title'] ?></h5>
                                             <font color='grey'><i class="bi bi-eye"></i> <?PHP echo $article['data']['see'] ?> <i class="bi bi-clock"></i> <?PHP echo $article['data']['date'] ?></font>
@@ -128,28 +135,36 @@ $Parsedown = new Parsedown();
                                 <div class="col-12 mb-3">
                                     <div class="row">
                                         <div class="col-4 col-xxl-3">
-                                            <div class="card">
-                                                <div class="card-body bg-success bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="正式版">
-                                                    <div class="text-center align-self-center text-success">R</div>
+                                            <?PHP
+                                            if ($file['data'][1]['type'] == 'R') {
+                                                ?>
+                                                <div class="card">
+                                                    <div class="card-body bg-success bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="正式版">
+                                                        <div class="text-center align-self-center text-success">R</div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <?PHP
+                                            } elseif ($file['data'][1]['type'] == 'B') {
+                                                ?>
+                                                <div class="card">
+                                                    <div class="card-body bg-warning bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="测试版">
+                                                        <div class="text-center align-self-center text-warning">B</div>
+                                                    </div>
+                                                </div>
+                                                <?PHP
+                                            } elseif ($file['data'][1]['type'] == 'A') {
+                                                ?>
+                                                <div class="card">
+                                                    <div class="card-body bg-danger bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="内测版">
+                                                        <div class="text-center align-self-center text-danger">A</div>
+                                                    </div>
+                                                </div>
+                                                <?PHP
+                                            }
+                                            ?>
                                         </div>
                                         <div class="col-8">
-                                            <a href="" class="text-decoration-none"><strong>1.0.0</strong></a><br/><font class="text-secondary">2022-07-15</font>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <div class="row">
-                                        <div class="col-4 col-xxl-3">
-                                            <div class="card">
-                                                <div class="card-body bg-warning bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="测试版">
-                                                    <div class="text-center align-self-center text-warning">B</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-8">
-                                            <a href="" class="text-decoration-none"><strong>1.0.0</strong></a><br/><font class="text-secondary">2022-07-15</font>
+                                            <a href="" class="text-decoration-none"><strong><?PHP echo $file['data'][1]['version']; ?></strong></a><br/><font class="text-secondary"><?PHP echo $file['data'][1]['time']; ?></font>
                                         </div>
                                     </div>
                                 </div>
