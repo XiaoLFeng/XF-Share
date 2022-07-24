@@ -66,11 +66,11 @@ $Parsedown = new Parsedown();
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="./index.php" class="text-decoration-none text-dark"><i class="bi bi-house-door-fill"></i></a></li>
                     <li class="breadcrumb-item active" aria-current="page">分类</li>
-                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    <li class="breadcrumb-item active" aria-current="page"><?PHP echo $article['data']['title'] ?></li>
                 </ol>
             </nav>
         </div>
-        <div class="col-12 col-lg-9">
+        <div class="col-12 col-lg-9 mb-3">
             <div class="row">
                 <!-- 内容 -->
                 <div class="col-12 mb-3">
@@ -107,7 +107,7 @@ $Parsedown = new Parsedown();
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-lg-3 mb-3">
             <div class="row">
                 <!-- 个人信息 -->
                 <div class="col-12 mb-3">
@@ -134,37 +134,25 @@ $Parsedown = new Parsedown();
                                 </div>
                                 <div class="col-12 mb-3">
                                     <div class="row">
-                                        <div class="col-4 col-xxl-3">
+                                        <div class="col-4 col-xxl-3 align-self-center">
                                             <?PHP
                                             if ($file['data'][1]['type'] == 'R') {
                                                 ?>
-                                                <div class="card">
-                                                    <div class="card-body bg-success bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="正式版">
-                                                        <div class="text-center align-self-center text-success">R</div>
-                                                    </div>
-                                                </div>
+                                                <span class="badge bg-success bg-opacity-25 text-success">RELEASE</span>
                                                 <?PHP
                                             } elseif ($file['data'][1]['type'] == 'B') {
                                                 ?>
-                                                <div class="card">
-                                                    <div class="card-body bg-warning bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="测试版">
-                                                        <div class="text-center align-self-center text-warning">B</div>
-                                                    </div>
-                                                </div>
+                                                <span class="badge bg-primary bg-opacity-25 text-primary">BETA</span>
                                                 <?PHP
                                             } elseif ($file['data'][1]['type'] == 'A') {
                                                 ?>
-                                                <div class="card">
-                                                    <div class="card-body bg-danger bg-opacity-10" data-bs-toggle="tooltip" data-bs-placement="bottom" title="内测版">
-                                                        <div class="text-center align-self-center text-danger">A</div>
-                                                    </div>
-                                                </div>
+                                                <span class="badge bg-warning bg-opacity-25 text-warning">APLHA</span>
                                                 <?PHP
                                             }
                                             ?>
                                         </div>
                                         <div class="col-8">
-                                            <a href="" class="text-decoration-none"><strong><?PHP echo $file['data'][1]['version']; ?></strong></a><br/><font class="text-secondary"><?PHP echo $file['data'][1]['time']; ?></font>
+                                            <a href="./article_file.php?file=<?PHP echo $file['data'][1]['id']; ?>" class="text-decoration-none"><strong><?PHP echo $file['data'][1]['version']; ?></strong></a><br/><font class="text-secondary"><?PHP echo $file['data'][1]['time']; ?></font>
                                         </div>
                                     </div>
                                 </div>

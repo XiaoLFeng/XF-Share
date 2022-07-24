@@ -105,11 +105,11 @@ $menu_id = 1;
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12 mb-1">
-                                                <svg class="bd-placeholder-img rounded" width="50" height="50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example rounded image: 75x75" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Example rounded image</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="5%" y="50%" fill="#dee2e6" dy=".3em">50x50</text></svg>
+                                                <img class="rounded-3 shadow-sm" src="<?PHP echo $article['data'][$a]['icon_url']; ?>" width="50" height="50" alt="">
                                                 <font class="mx-3 fs-5"><?PHP echo $article['data'][$a]['title']; ?></font>
                                             </div>
                                             <div class="col-6 mb-3 text-start">
-                                                <div class="badge bg-secondary"><? echo tags($article['data'][$a]['type']) ?></div>
+                                                <div class="badge bg-secondary bg-opacity-10 text-secondary border"><? echo tags($article['data'][$a]['type']) ?></div>
                                             </div>
                                             <div class="col-6 mb-3 text-end"><i class="bi bi-person"></i> <?PHP echo displayname($article['data'][$a]['username']) ?></div>
                                             <hr/>
@@ -153,7 +153,7 @@ $menu_id = 1;
                         </div>
                     </div>
                 </div>
-                <!-- 分类 -->
+                <!-- 
                 <div class="col-12 mb-3">
                     <div class="card rounded-3 shadow">
                         <div class="card-body">
@@ -166,8 +166,8 @@ $menu_id = 1;
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- 最近评论 -->
+                </div>分类 -->
+                <!-- 
                 <div class="col-12 mb-3">
                     <div class="card rounded-3 shadow">
                         <div class="card-body">
@@ -180,7 +180,7 @@ $menu_id = 1;
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>最近评论 -->
             </div>
         </div>
     </div>
