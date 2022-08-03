@@ -27,16 +27,16 @@ if (!empty($ssid)) {
                     'code'=>200,
                     'info'=>'查询成功',
                     'data'=>array(
-                        'id'=>$result_article_object->id,
-                        'username'=>$result_article_object->username,
-                        'title'=>$result_article_object->title,
-                        'type'=>$result_article_object->type,
-                        'text'=>$result_article_object->text,
-                        'date'=>$result_article_object->date,
-                        'update_date'=>$result_article_object->update_date,
-                        'see'=>$result_article_object->see,
-                        'hide'=>$result_article_object->hide,
-                        'icon_url'=>$result_article_object->icon_url
+                        'id'=>stripslashes($result_article_object->id),
+                        'username'=>stripslashes($result_article_object->username),
+                        'title'=>stripslashes($result_article_object->title),
+                        'type'=>stripslashes($result_article_object->type),
+                        'text'=>stripslashes($result_article_object->text),
+                        'date'=>stripslashes($result_article_object->date),
+                        'update_date'=>stripslashes($result_article_object->update_date),
+                        'see'=>stripslashes($result_article_object->see),
+                        'hide'=>stripslashes($result_article_object->hide),
+                        'icon_url'=>stripslashes($result_article_object->icon_url)
                     )
                 );
                 // 输出数据

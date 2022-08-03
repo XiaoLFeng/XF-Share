@@ -24,9 +24,9 @@ if (!empty($ssid)) {
                     'code'=>200,
                     'info'=>'查询成功',
                     'data'=>array(
-                        'tags'=>$result_tags_object->tags,
-                        'name'=>$result_tags_object->name,
-                        'lore'=>$result_tags_object->lore
+                        'tags'=>stripslashes($result_tags_object->tags),
+                        'name'=>stripslashes($result_tags_object->name),
+                        'lore'=>stripslashes($result_tags_object->lore)
                     )
                 );
                 // 输出数据

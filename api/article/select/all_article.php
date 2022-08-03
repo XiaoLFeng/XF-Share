@@ -40,15 +40,15 @@ if (!empty($ssid)) {
             $datas = array();
             while ($result_article_object = mysqli_fetch_object($result_article)) {
                 $datas[$arr_num] = array(
-                    'id'=>$result_article_object->id,
-                    'username'=>$result_article_object->username,
-                    'title'=>$result_article_object->title,
-                    'type'=>$result_article_object->type,
-                    'date'=>$result_article_object->date,
-                    'update_date'=>$result_article_object->update_date,
-                    'see'=>$result_article_object->see,
-                    'hide'=>$result_article_object->hide,
-                    'icon_url'=>$result_article_object->icon_url
+                    'id'=>stripslashes($result_article_object->id),
+                    'username'=>stripslashes($result_article_object->username),
+                    'title'=>stripslashes($result_article_object->title),
+                    'type'=>stripslashes($result_article_object->type),
+                    'date'=>stripslashes($result_article_object->date),
+                    'update_date'=>stripslashes($result_article_object->update_date),
+                    'see'=>stripslashes($result_article_object->see),
+                    'hide'=>stripslashes($result_article_object->hide),
+                    'icon_url'=>stripslashes($result_article_object->icon_url)
                 );
                 $arr_num ++;
             }

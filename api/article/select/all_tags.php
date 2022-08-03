@@ -39,9 +39,9 @@ if (!empty($ssid)) {
             $datas = array();
             while ($result_tags_object = mysqli_fetch_object($result_tags)) {
                 $datas[$arr_num] = array(
-                    'tags'=>$result_tags_object->tags,
-                    'name'=>$result_tags_object->name,
-                    'lore'=>$result_tags_object->lore
+                    'tags'=>stripslashes($result_tags_object->tags),
+                    'name'=>stripslashes($result_tags_object->name),
+                    'lore'=>stripslashes($result_tags_object->lore)
                 );
                 $arr_num ++;
             }

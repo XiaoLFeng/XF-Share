@@ -32,7 +32,7 @@ if (!empty($ssid)) {
                 } else {
                     // 构建json
                     $data = array(
-                        'output'=>'ID_ARTICLE_NONE',
+                        'output'=>'ID_TAGS_NONE',
                         'code'=>403,
                         'info'=>'删除失败，数据库删除错误！',
                     );
