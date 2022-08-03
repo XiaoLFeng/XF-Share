@@ -18,6 +18,9 @@ if (!empty($ssid)) {
             $result_article = mysqli_query($conn,"SELECT * FROM ".$setting['SQL_DATA']['article']." WHERE id='$id'");
             $result_article_object = mysqli_fetch_object($result_article);
             if (!$result_article_object->id == NULL) {
+                // 看一看加一
+                $see = $result_article_object->see + 1;
+                mysqli_query($conn,"UPDATE ".$setting['SQL_DATA']['article']." SET see='$see' WHERE id='$id'");
                 // 构建json
                 $data = array(
                     'output'=>'SUCCESS',

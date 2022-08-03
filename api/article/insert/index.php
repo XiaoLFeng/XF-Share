@@ -14,10 +14,10 @@ $json_info = json_decode($post,true);
 if ($json_info['ssid'] == xfs_ssid()) {
     // 检查内容是否缺失
     if (!empty($json_info['data']['user']['user'])
-        && !empty($json_info['data']['article']['title'])
-        && !empty($json_info['data']['article']['text']) 
-        && !empty($json_info['data']['article']['tags']) 
-        && !empty($json_info['data']['article']['hide'])) {
+        and !empty($json_info['data']['article']['title'])
+        and !empty($json_info['data']['article']['text']) 
+        and !empty($json_info['data']['article']['tags']) 
+        and !empty($json_info['data']['article']['hide'])) {
         // 检查是否隐藏是否符合布尔值
         if (!$json_info['data']['hide'] == TRUE and !$json_info['data']['hide'] == FALSE) {
             // 构建json
