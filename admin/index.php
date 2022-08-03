@@ -58,24 +58,39 @@ if ($person['info']['type'] == 1) {
         <!-- 8分 -->
         <div class="col-12 col-lg-8 mb-3">
             <div class="row">
-                <div class="col-6 col-lg-3 mb-3">
+                <div class="col-6 col-bg-6 col-xl-3 mb-3">
                     <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
                         <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3 mb-3">
+                <div class="col-6 col-bg-6 col-xl-3 mb-3">
                     <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
                         <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3 mb-3">
+                <div class="col-6 col-bg-6 col-xl-3 mb-3">
                     <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
                         <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3 mb-3">
+                <div class="col-6 col-bg-6 col-xl-3 mb-3">
                     <div class="card shadow-sm rounded-3 bg-success bg-opacity-25 bg-gradient">
                         <div class="card-body text-center fs-5"><i class="bi bi-list-columns-reverse"></i> 文章 <font class="fw-bold"><?PHP echo 1 ?></font> 篇</div>
+                    </div>
+                </div>
+                <div class="col-12 mb-3 fs-4 fw-bold"><i class="bi bi-list"></i> 导航</div>
+                <div class="col-12 mb-3">
+                    <div class="card rounded-3 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="row">
+                                <div class="col-12">
+                                    <a class="btn btn-outline-primary" href="./article.php" role="button"><i class="bi bi-list-nested"></i> 文章管理</a>
+                                    <a class="btn btn-outline-primary" href="./tags.php" role="button"><i class="bi bi-tags"></i> 标签管理</a>
+                                    <a class="btn btn-outline-primary" href="./user.php" role="button"><i class="bi bi-person"></i> 用户管理</a>
+                                    <a class="btn btn-outline-primary" href="./setting.php" role="button"><i class="bi bi-gear"></i> 项目设置</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 mb-3 fs-4 fw-bold"><i class="bi bi-hdd-rack"></i> 服务器信息</div>
@@ -130,5 +145,5 @@ if ($person['info']['type'] == 1) {
 <?PHP include('../module/footer.php') ?>
 </body>
 <!-- JavaScript -->
-<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/bootstrap.bundle.min.js"></script>
 </html>
