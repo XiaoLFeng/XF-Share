@@ -14,21 +14,21 @@ include('./plugins/Parsedown.php');
 $id = htmlspecialchars($_GET['id']);
 
 // 载入用户信息
-$person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';    
+$person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';
 $person_ch = curl_init($person_url);
 curl_setopt($person_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
 curl_setopt($person_ch, CURLOPT_RETURNTRANSFER, true);
 $person = curl_exec($person_ch);
 $person = json_decode($person,true);
 // 载入文章信息
-$article_url = $_SERVER['HTTP_HOST'].'/api/article/select/?ssid='.xfs_ssid().'&id='.$id;    
+$article_url = $_SERVER['HTTP_HOST'].'/api/article/select/?ssid='.xfs_ssid().'&id='.$id;
 $article_ch = curl_init($article_url);
 curl_setopt($article_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
 curl_setopt($article_ch, CURLOPT_RETURNTRANSFER, true);
 $article = curl_exec($article_ch);
 $article = json_decode($article,true);
 // 载入文件信息
-$file_url = $_SERVER['HTTP_HOST'].'/api/file/select/?ssid='.xfs_ssid().'&id='.$id;    
+$file_url = $_SERVER['HTTP_HOST'].'/api/file/select/?ssid='.xfs_ssid().'&id='.$id;
 $file_ch = curl_init($file_url);
 curl_setopt($file_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
 curl_setopt($file_ch, CURLOPT_RETURNTRANSFER, true);
