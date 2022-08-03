@@ -67,5 +67,5 @@ if (empty($step)) {
 <?PHP include('./subsidiary/footer.php'); ?>
 </body>
 <!-- JavaScript -->
-<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/bootstrap.bundle.min.js"></script>
 </html>
