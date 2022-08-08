@@ -18,7 +18,7 @@ if (empty($page)) {
 }
 
 // 载入个人用户信息
-$person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';    
+$person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&type=id&username='.$_COOKIE['user'];     
 $person_ch = curl_init($person_url);
 curl_setopt($person_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
 curl_setopt($person_ch, CURLOPT_RETURNTRANSFER, true);
@@ -47,7 +47,7 @@ function tags($tags) {
 }
 // 获取用户展示名字
 function displayname($username) {
-    $personal_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username='.$username;    
+    $personal_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&type=username&username='.$username;    
     $personal_ch = curl_init($personal_url);
     curl_setopt($personal_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
     curl_setopt($personal_ch, CURLOPT_RETURNTRANSFER, true);

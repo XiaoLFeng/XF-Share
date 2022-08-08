@@ -113,7 +113,7 @@ if (!empty($_COOKIE['user'])/*检查COOKIE*/) {
                 'file_title'=>addslashes($_POST['file_title']),
                 'file_type'=>addslashes($_POST['file_type']),
                 'file_text'=>addslashes($_POST['file_text']),
-                'file_offline_url'=>'(本地)http://'.$_SERVER['HTTP_HOST'].'/uploads/'.$_FILES["file_offline"]["name"],
+                'file_offline_url'=>'(本地)http://'.$_SERVER['HTTP_HOST'].'\/uploads\/'.$_FILES["file_offline"]["name"],
                 'file_other'=>addslashes($file_list),
                 'file_version'=>addslashes($_POST['file_version']),
             )

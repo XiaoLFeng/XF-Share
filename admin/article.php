@@ -14,7 +14,7 @@ if (empty($_COOKIE['user'])) {
     header('location: ../auth.php');
 } else {
     // 获取用户信息
-    $person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';    
+    $person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&type=id&username='.$_COOKIE['user'];     
     $person_ch = curl_init($person_url);
     curl_setopt($person_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
     curl_setopt($person_ch, CURLOPT_RETURNTRANSFER, true);
@@ -121,7 +121,7 @@ if ($person['info']['type'] == 1) {
                                         <td><?PHP echo $article['data'][$num]['see']; ?></td>
                                         <td>
                                             <a class="btn btn-sm btn-outline-primary" href="./article_edit.php?article_id=<?PHP echo $article['data'][$num]['id']; ?>" role="button"><i class="bi bi-pencil"></i> 修改</a>
-                                            <a class="btn btn-sm btn-outline-success" href="./article_file.php?article_id=<?PHP echo $article['data'][$num]['id']; ?>" role="button"><i class="bi bi-file-earmark-text"></i> 文件</a>
+                                            <a class="btn btn-sm btn-outline-success" href="./file.php?article_id=<?PHP echo $article['data'][$num]['id']; ?>" role="button"><i class="bi bi-file-earmark-text"></i> 文件</a>
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-<?PHP echo $num; ?>"><i class="bi bi-x-circle"></i> 删除</button>
                                             <!-- Modal -->
                                             <div class="modal fade" id="modal-<?PHP echo $num; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

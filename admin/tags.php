@@ -14,7 +14,7 @@ if (empty($_COOKIE['user'])) {
     header('location: ../auth.php');
 } else {
     // 获取用户信息
-    $person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&username=xiao_lfeng';    
+    $person_url = $_SERVER['HTTP_HOST'].'/api/person/?ssid='.xfs_ssid().'&type=id&username='.$_COOKIE['user'];     
     $person_ch = curl_init($person_url);
     curl_setopt($person_ch,CURLOPT_USERAGENT,$_SERVER['HTTP_USER_AGENT']);
     curl_setopt($person_ch, CURLOPT_RETURNTRANSFER, true);
