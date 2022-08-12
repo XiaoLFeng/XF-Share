@@ -33,42 +33,38 @@ include($_SERVER['DOCUMENT_ROOT'].'/plugins/sql_conn.php');
         return $xfs_ssid_object->text;
     }
 
+// 获取参数
+$file_id = htmlspecialchars($_GET['file_id']);
+
 // 编译函数
 if (!empty($_COOKIE['user'])/*检查COOKIE*/) {
     // 默认不检查数据
     // 发送用户信息
-    $url = $_SERVER['HTTP_HOST']."/api/article/insert/"; //请求地址
-    // 文件系统
-        // 本地文件上传
-        if ($_FILES["file_offline"]["error"] > 0) {
-            echo <<<EOF
-                    <script language="javascript">
-                        alert( "文件错误！" )
-                        window.history.go(-1);
-                    </script>
-                    EOF;
-        } else {
-            if (file_exists($_SERVER['DOCUMENT_ROOT']."/uploads/" . $_FILES["file_offline"]["name"])) {
-                echo <<<EOF
-                    <script language="javascript">
-                        alert( "文件已存在，请更换文件名称！" )
-                        window.history.go(-1);
-                    </script>
-                    EOF;
-            } else {
-                // 如果 upload 目录不存在该文件则将文件上传到 upload 目录下
-                move_uploaded_file($_FILES["file_offline"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']."/uploads/" . $_FILES["file_offline"]["name"]);
-            }
-        }
+    $url = $_SERVER['HTTP_HOST']."/api/file/edit/"; //请求地址
     // 文件检查
     if (!empty($_POST['file_title'])) {
         // 文件整理
         $file_num = 1;
-        do {
+        while (!$_POST['upload_file_U_'.$file_num] == NULL) {
             $files[$file_num] = '('.$_POST['upload_file_U_'.$file_num].')'.$_POST['upload_file_D_'.$file_num];
-            $file_num++;
-        } while (!$_POST['upload_file_U_'.$file_num] == NULL);
-        $file_list = implode(",",$files);
+            $file_num ++;
+        };
+        $file_nums = 1;
+        while (!$_POST['edit_file_U_'.$file_nums] == NULL) {
+            $edit_file[$file_nums] = '('.$_POST['edit_file_U_'.$file_nums].')'.$_POST['edit_file_D_'.$file_nums];
+            $file_nums ++;
+        };
+        if (empty($files['1'])) {
+            $file_list_edit = implode(",",$edit_file);
+            $load_file = $file_list_edit;
+        } elseif (empty($edit_file['1'])) {
+            $file_list = implode(",",$files);
+            $load_file = $file_list;
+        } else {
+            $file_list = implode(",",$files);
+            $file_list_edit = implode(",",$edit_file);
+            $load_file = $file_list_edit.','.$file_list;
+        }
         // 判断文件是否有问题
         if (empty($_POST['file_text'])) {
             echo <<<EOF
@@ -77,7 +73,7 @@ if (!empty($_COOKIE['user'])/*检查COOKIE*/) {
                         window.history.go(-1);
                     </script>
                     EOF;
-        } elseif (empty($_FILES["file_offline"]["name"]) || empty($file_list)) {
+        } elseif (empty($file_list) && empty($file_list_edit)) {
             echo <<<EOF
                     <script language="javascript">
                         alert( "文件至少上传一个！" )
@@ -93,11 +89,6 @@ if (!empty($_COOKIE['user'])/*检查COOKIE*/) {
                     EOF;
         }
     }
-    function file_info() {
-        if (!$_FILES["file_offline"]["name"] == NULL) {
-            echo '(本地)http://'.$_SERVER['HTTP_HOST'].'\/uploads\/'.$_FILES["file_offline"]["name"];
-        } else {}
-    }
     $arr = array(
         'output'=>'SUCCESS',
         'code'=>200,
@@ -107,24 +98,17 @@ if (!empty($_COOKIE['user'])/*检查COOKIE*/) {
             'user'=>array(
                 'user'=>$_COOKIE['user'],
             ),
-            'article'=>array(
-                'title'=>addslashes($_POST['title']),
-                'icon_url'=>addslashes($_POST['icon_url']),
-                'text'=>addslashes($_POST['text']),
-                'tags'=>addslashes($_POST['tags']),
-                'hide'=>addslashes($_POST['hide']),
-            ),
             'files'=>array(
+                'file_id'=>$file_id,
                 'file_title'=>addslashes($_POST['file_title']),
                 'file_type'=>addslashes($_POST['file_type']),
                 'file_text'=>addslashes($_POST['file_text']),
-                'file_offline_url'=>file_info(),
-                'file_other'=>addslashes($file_list),
+                'file_other'=>$load_file,
                 'file_version'=>addslashes($_POST['file_version']),
             )
         )
     ); //请求参数(数组)
-    $jsonStr = json_encode($arr); //转换为json格式
+    $jsonStr = json_encode($arr,JSON_UNESCAPED_UNICODE); //转换为json格式
     $result = http_post_json($url, $jsonStr);
     $result = json_decode($result,true);
 
@@ -136,52 +120,31 @@ if (!empty($_COOKIE['user'])/*检查COOKIE*/) {
                     window.location.href = "../article.php"
                 </script>
                 EOF;
-    } elseif ($result['output'] == 'HIDE_BOOLEAN_ERROR') {
-        echo <<<EOF
-            <script language="javascript">
-                alert( "参数 JSON[hide] 不符合布尔值参数" )
-                window.history.go(-1);
-            </script>
-            EOF;
     } elseif ($result['output'] == 'FILE_UPLOAD_FAIL') {
         echo <<<EOF
             <script language="javascript">
-                alert( "文章生成完毕，文件上传失败" )
+                alert( "文件上传失败" )
                 window.history.go(-1);
             </script>
             EOF;
-    } elseif ($result['output'] == 'INSERT_ERROR') {
+    } elseif ($result['output'] == 'FILE_NONE') {
         echo <<<EOF
             <script language="javascript">
-                alert( "数据库写入失败" )
+                alert( "参数 JSON[file] 缺失" )
                 window.history.go(-1);
             </script>
             EOF;
-    } elseif ($result['output'] == 'TITLE_NONE') {
+    } elseif ($result['output'] == 'USERNAME_NONE') {
         echo <<<EOF
             <script language="javascript">
-                alert( "参数 JSON[title] 缺失" )
+                alert( "您登陆了吗？" )
                 window.history.go(-1);
             </script>
             EOF;
-    } elseif ($result['output'] == 'TYPE_NONE') {
+    } elseif ($result['output'] == 'FILE_OTHER_NONE') {
         echo <<<EOF
             <script language="javascript">
-                alert( "参数 JSON[type] 缺失" )
-                window.history.go(-1);
-            </script>
-            EOF;
-    } elseif ($result['output'] == 'TEXT_NONE') {
-        echo <<<EOF
-            <script language="javascript">
-                alert( "参数 JSON[text] 缺失" )
-                window.history.go(-1);
-            </script>
-            EOF;
-    } elseif ($result['output'] == 'HIDE_NONE') {
-        echo <<<EOF
-            <script language="javascript">
-                alert( "参数 JSON[hide] 缺失" )
+                alert( "文件缺失" )
                 window.history.go(-1);
             </script>
             EOF;

@@ -141,4 +141,10 @@ if ($person['info']['type'] == 1) {
 </body>
 <!-- JavaScript -->
 <script src="../static/js/bootstrap.bundle.min.js"></script>
+<script>
+    var tooltipTriggerList = Array.prototype.slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+</script>
 </html>
